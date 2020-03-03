@@ -26,8 +26,8 @@ Ricordare che l'immagine da usare in produzione o staging fa riferimento al Dock
         make init
     
     4.  Route test
-        localhost/api/v1/test 
-        localhost/api/v1/discovery
+        localhost:8084/api/v1/test 
+        localhost:8084/api/v1/discovery
     
 **- make coomand**
 
