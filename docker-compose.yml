@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+  ####################################################################################################
+  # The Application
+  ####################################################################################################
+  lumen_backend:
+    container_name: ${BACKEND_NAME}
+    build:
+      context: ./backend
+      dockerfile: compose/Dockerfile
+      args:
+        - TAG=${BACKEND_TAG}
+    expose:
+      - ${BACKEND_CONTAINER_PORT}
+    environment:
+      - COMPOSER=${BACKEND_ENV_COMPOSER}
+      - PHP_EXTENSION_XDEBUG=1
+    volumes:
+      - ./backend:/var/www
+    working_dir: /var/www
+    networks:
+      - net_webserver
+
+  ####################################################################################################
+  # The Web Server
+  ####################################################################################################
+  webserver:
+    container_name: ${APP_NAME}
+    build:
+      context: ./webserver
+      dockerfile: Dockerfile
+      args:
+        - TAG=${WEBSERVER_TAG}
+    ports:
+      - "${WEBSERVER_HOST_PORT}:${WEBSERVER_CONTAINER_PORT}"
+    working_dir: /var/www
+    networks:
+      - net_webserver
+    depends_on:
+      - ${BACKEND_NAME}
+
+networks:
+  net_webserver: {}
