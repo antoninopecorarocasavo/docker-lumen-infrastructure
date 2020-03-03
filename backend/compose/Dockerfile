@@ -1,4 +1,4 @@
-ARG TAG=7.3.8-fpm-alpine
+ARG TAG=7.4-fpm-alpine
 
 FROM php:$TAG
 
@@ -12,6 +12,7 @@ ENV build_deps \
         freetype-dev \
         libjpeg-turbo-dev \
         libpng-dev \
+        oniguruma-dev \
         freetype-dev
 
 ENV persistent_deps \
@@ -42,10 +43,8 @@ RUN apk add --update --no-cache --virtual .persistent-dependencies $persistent_d
 # Install docker ext
 RUN apk update && \
     docker-php-ext-configure gd \
-        --with-gd \
-        --with-freetype-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ && \
+        --with-jpeg=/usr/include/ \
+        --with-freetype=/usr/include/ && \
         NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) && \
         docker-php-ext-install -j${NPROC} gd && \
     docker-php-ext-install mysqli pdo pdo_mysql \

@@ -70,7 +70,7 @@ Ricordare che l'immagine da usare in produzione o staging fa riferimento al Dock
 **Application env** 
     
     -Webserver Nginx 1.17-alpine
-    -Application: PHP 7.3.8-fpm-alpine
+    -Application: PHP 7.4-fpm-alpine
 
 **Kosmos X**
 
